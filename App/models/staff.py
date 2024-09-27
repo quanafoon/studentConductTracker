@@ -5,7 +5,7 @@ class Staff(db.Model):
     name =  db.Column(db.String(20), nullable=False, unique=True)
     department = db.Column(db.String(40), nullable=False)
 
-    def __init__(self, name, department, year_joined):
+    def __init__(self, name, department):
         self.name = name
         self.department = department
 

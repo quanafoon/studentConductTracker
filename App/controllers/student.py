@@ -8,7 +8,18 @@ def create_student(name, major):
     return new_student
 
 def get_student(id):
-    return Student.query.get(id)
+    student = Student.query.get(id)
+    if student: 
+        return student
+    else:
+        return None
+
+def get_student_json(id):
+    student = Student.query.get(id)
+    if student: 
+        return student.get_json()
+    else:
+        return None
 
 def add_review(studentID, staffID, text):
     review = Review(text, studentID, staffID)
@@ -17,4 +28,4 @@ def add_review(studentID, staffID, text):
     return review
 
 def get_reviews(studentID):
-    return Review.query.all(studentID=studentID)
+    return Review.query.filter_by(studentID=studentID).first()
