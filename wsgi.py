@@ -100,16 +100,30 @@ def search_student_command(id):
         print(f'Student does not exist')
 
 @student_cli.command("review", help='Review a student')
-@click.argument("studentID")
-@click.argument("staffID")
+@click.argument("student")
+@click.argument("staff")
 @click.argument("text")
-
-def review_student_command(studentID, staffID, text):
-    review = add_review(studentID, staffID, text)
+def review_student_command(student, staff, text):
+    review = add_review(student, staff, text)
     if review:
-        student = get_student(studentID)
-        print(f'Review: {student.review.text}')
+        student = get_student(student)
+        print(f'Review was created for {review.student.name} by {review.staff.name}')
     else:
         print(f'Student does not exist')
+
+
+@student_cli.command("viewReviews", help='View student reviews')
+@click.argument("id")
+def view_reviews_command(id):
+    reviews = get_reviews(id)
+    if reviews:
+        student = get_student(id)
+        print(f'Reviews for {student.name}: ')
+        for review in reviews:
+            print(f'From {review.staff.name}, {review.staff.id}: {review.text}')
+    else:
+        print(f'Student does not exist')
+
+
 
 app.cli.add_command(student_cli)

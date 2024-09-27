@@ -5,10 +5,10 @@ class Review(db.Model):
     text = db.Column(db.String(100), nullable=True)
     studentID = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
     staffID = db.Column(db.Integer, db.ForeignKey('staff.id'), nullable=False)
-    student = db.relationship('Student', backref=db.backref('reviews'))
-    staff = db.relationship('Staff', backref=db.backref('reviews'))
+    student = db.relationship('Student', backref=db.backref('review'))
+    staff = db.relationship('Staff', backref=db.backref('review'))
 
-    def __init__(self, text):
-        self.name = name
-        self.department = department
-        self.year_joined = year_joined
+    def __init__(self, text, studentID, staffID):
+        self.text = text
+        self.studentID = studentID
+        self.staffID = staffID

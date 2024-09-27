@@ -28,4 +28,4 @@ def add_review(studentID, staffID, text):
     return review
 
 def get_reviews(studentID):
-    return Review.query.filter_by(studentID=studentID).first()
+    return Review.query.filter_by(studentID=studentID).all()
