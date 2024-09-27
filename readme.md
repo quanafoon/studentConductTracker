@@ -1,10 +1,9 @@
 
-Note - 3 members of staff have been created for the purposes of grading the assignment
-       id       firstname       lastname        department
-       1        John            Gonzales        DCIT
-       2        James           Laurence        DCIT
-       3        Jane            Henderson       DCIT
+Note - 3 members of staff have been created for the purposes of grading the assignment:
 
+    id - 1, firstname - John, lastname - Gonzales, department - DCIT
+    id - 2, firstname - James, lastname - Laurence, department - DCIT
+    id - 3, firstname - Jane, lastname - Hnederson, department - DCIT
 
 
 Commands:
