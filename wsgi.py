@@ -19,9 +19,9 @@ migrate = get_migrate(app)
 @app.cli.command("init", help="Creates and initializes the database")
 def init():
     initialize()
-    create_staff("John", "DCIT")
-    create_staff("James", "DCIT")
-    create_staff("Jane", "DCIT")
+    create_staff("John", "Gonzales", "DCIT")
+    create_staff("James", "Laurence", "DCIT")
+    create_staff("Jane", "Henderson", "DCIT")
     print('database intialized')
 
 '''
@@ -80,12 +80,14 @@ Student Commands
 student_cli = AppGroup('student', help= 'Student commands')
 
 @student_cli.command("add", help='Add a student')
-@click.argument("name")
+@click.argument("firstname")
+@click.argument("lastname")
 @click.argument("major")
-def add_student_command(name, major):
-    student = create_student(name, major)
+def add_student_command(firstname, lastname, major):
+    student = create_student(firstname, lastname, major)
     if student:
-        print(f'{student.name} has been added!')
+        print(f'{student.firstname} {student.lastname} has been added!')
+        print(f'id: {student.id}')
     else:
         print(f'Error making student')
 
@@ -107,7 +109,7 @@ def review_student_command(student, staff, text):
     review = add_review(student, staff, text)
     if review:
         student = get_student(student)
-        print(f'Review was created for {review.student.name} by {review.staff.name}')
+        print(f'Review was created for {review.student.firstname} {review.student.lastname} by {review.staff.firstname} {review.staff.lastname}')
     else:
         print(f'Student does not exist')
 
@@ -118,9 +120,9 @@ def view_reviews_command(id):
     reviews = get_reviews(id)
     if reviews:
         student = get_student(id)
-        print(f'Reviews for {student.name}: ')
+        print(f'Reviews for {student.firstname} {student.lastname}, {student.id}: ')
         for review in reviews:
-            print(f'From {review.staff.name}, {review.staff.id}: {review.text}')
+            print(f'From {review.staff.firstname} {review.staff.lastname}, {review.staff.id}: {review.text}')
     else:
         print(f'Student does not exist')
 
