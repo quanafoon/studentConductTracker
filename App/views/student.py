@@ -34,6 +34,18 @@ def student_search():
     return render_template('search.html')
 
 @jwt_required
+@student_views.route('/searchResult', methods=['GET'])
+def search_result():
+    studentID = request.args.get('studentID')
+    student = get_student(studentID)
+    if student:
+        flash('Student Found')
+        return render_template('search.html', student=student)
+    else:
+        flash('Student was not found')
+        return render_template('search.html')
+
+@jwt_required
 @student_views.route('/review', methods=['GET'])
 def review_student():
     return render_template('reviewForm.html')
