@@ -18,9 +18,12 @@
       <section class="col s12 m6" style="margin-top: 10px; background-color: #f1f1f1; height:480px">
          <h5 style="text-align: center;">Student Info</h5>
          {% if student %}
-            <p style="margin-top:20%"> First Name: {{student.firstname}}</p>
-            <p> Last Name: {{student.lastname}}</p>
-            <p> Major: {{student.major}}</p>
+            <div style="margin-top:20%">
+               <p>ID: {{student.id}}</p>
+               <p> First Name: {{student.firstname}}</p>
+               <p> Last Name: {{student.lastname}}</p>
+               <p> Major: {{student.major}}</p>
+            </div>
          {% endif %}
       </section>
    </div>
