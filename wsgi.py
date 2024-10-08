@@ -3,11 +3,10 @@ from flask import Flask
 from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
-from App.models import User, Student, Review, Staff
+from App.models import User, Student, Review
 from App.main import create_app
 from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, 
-                              create_student, get_student, get_student_json, add_review, get_reviews, 
-                              create_staff)
+                              create_student, get_student, get_student_json, add_review, get_reviews)
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -19,9 +18,6 @@ migrate = get_migrate(app)
 @app.cli.command("init", help="Creates and initializes the database")
 def init():
     initialize()
-    create_staff("John", "Gonzales", "DCIT")
-    create_staff("James", "Laurence", "DCIT")
-    create_staff("Jane", "Henderson", "DCIT")
     print('database intialized')
 
 '''
@@ -38,8 +34,13 @@ user_cli = AppGroup('user', help='User object commands')
 @user_cli.command("create", help="Creates a user")
 @click.argument("username", default="rob")
 @click.argument("password", default="robpass")
-def create_user_command(username, password):
-    create_user(username, password)
+@click.argument("firstname", default="rob")
+@click.argument("lastname", default="guy")
+@click.argument("department", default="DCIT")
+
+
+def create_user_command(username, password, firstname, lastname, department):
+    create_user(username, password, firstname, lastname, department)
     print(f'{username} created!')
 
 # this command will be : flask user create bob bobpass
@@ -103,13 +104,13 @@ def search_student_command(id):
 
 @student_cli.command("review", help='Review a student')
 @click.argument("student")
-@click.argument("staff")
+@click.argument("user")
 @click.argument("text")
-def review_student_command(student, staff, text):
-    review = add_review(student, staff, text)
+def review_student_command(student, user, text):
+    review = add_review(student, user, text)
     if review:
         student = get_student(student)
-        print(f'Review was created for {review.student.firstname} {review.student.lastname} by {review.staff.firstname} {review.staff.lastname}')
+        print(f'Review was created for {review.student.firstname} {review.student.lastname} by {review.user.firstname} {review.user.lastname}')
     else:
         print(f'Student does not exist')
 
@@ -122,7 +123,7 @@ def view_reviews_command(id):
         student = get_student(id)
         print(f'Reviews for {student.firstname} {student.lastname}, {student.id}: ')
         for review in reviews:
-            print(f'From {review.staff.firstname} {review.staff.lastname}, {review.staff.id}: {review.text}')
+            print(f'From {review.user.firstname} {review.user.lastname}, {review.user.id}: {review.text}')
     else:
         print(f'Student does not exist')
 
