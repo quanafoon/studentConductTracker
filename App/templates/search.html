@@ -6,6 +6,20 @@
 
 {% block content %}
     
-   <p>search</p>
-
+   <div class="row">
+      <section class="col s12 m6">
+         <form style="display:flex; margin-top:40%" action="/searchResult" method="GET">
+            <div class="input-field" style="margin-top: 30px;  width:50%">
+               <input placeholder="Student ID" name="studentID" type="text" required="">
+           </div>
+           <button class="btn-large" type="submit" style="margin-top:20px; margin-left:10px"> Search </button>
+         </form>
+      </section>
+      <section class="col s12 m6" style="margin-top: 10px; background-color: #f1f1f1; height:480px">
+         <h5 style="text-align: center;">Student Info</h5>
+         {% if student %}
+            <p> test <p>
+         {% endif %}
+      </section>
+   </div>
 {% endblock %}
