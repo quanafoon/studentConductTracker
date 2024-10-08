@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}StudentConductTracker{% endblock %}
-{% block page %}Home{% endblock %}
+{% block page %}Add Student{% endblock %}
 
 {{ super() }}
 
@@ -10,7 +10,7 @@
         <h4 style="margin-top: 50px;"> Welcome {{current_user.firstname}} {{current_user.lastname}},</h4>
         <p style="margin-top: 40px;">What would you like to do</p>
         <div style="display: flex; margin-top:30px">
-            <form action="/studentForm" method="GET">
+            <form action="/">
                 <button style="width:250px" class="btn-large"> Add Student</button>
             </form>
             <form style="margin-left: 30px" action="/">
