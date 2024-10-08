@@ -5,6 +5,7 @@ from.index import index_views
 
 from App.controllers import (
     create_student,
+    get_student,
     jwt_required
 )
 
@@ -16,10 +17,31 @@ def student_form():
     return render_template('studentForm.html')
 
 
-@student_views.route('/students', methods=['GET'])
-def get_student_page():
-    students = get_all_students()
-    return render_template('students.html', students=students)
+@jwt_required
+@student_views.route('/addStudent', methods=['POST'])
+def add_student():
+    data = request.form
+    student = create_student(data['firstname'], data['lastname'], data['major'])
+    if student:
+        flash('Student created')
+    else:
+        flash('Could not create student')
+    return render_template('index.html')
+
+@jwt_required
+@student_views.route('/searchStudent', methods=['GET'])
+def student_search():
+    return render_template('search.html')
+
+@jwt_required
+@student_views.route('/review', methods=['GET'])
+def review_student():
+    return render_template('reviewForm.html')
+
+@jwt_required
+@student_views.route('/viewReviews', methods=['GET'])
+def view_reviews():
+    return render_template('reviews.html')
 
 @student_views.route('/students', methods=['POST'])
 def create_student_action():

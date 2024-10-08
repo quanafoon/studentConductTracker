@@ -6,35 +6,17 @@
 
 {% block content %}
     
-    {% if is_authenticated %}
-        <h4 style="margin-top: 50px;"> Welcome {{current_user.firstname}} {{current_user.lastname}},</h4>
-        <p style="margin-top: 40px;">What would you like to do</p>
-        <div style="display: flex; margin-top:30px">
-            <form action="/">
-                <button style="width:250px" class="btn-large"> Add Student</button>
-            </form>
-            <form style="margin-left: 30px" action="/">
-                <button style="width:250px" class="btn-large"> Search Student</button>
-            </form>
+    <form style="margin-top: 10%; margin-left: 30%;" action="/addStudent" method="POST"> 
+        <div class="input-field" style=" width:50%">
+            <input placeholder="First Name" name="firstname" type="text" required="">
         </div>
-        <div style="display: flex; margin-top:30px">
-            <form action="/">
-                <button style="width:250px" class="btn-large"> Review Student </button>
-            </form>
-            <form style="margin-left: 30px" action="/">
-                <button style="width:250px" class="btn-large"> View Reviews </button>
-            </form>
+        <div class="input-field" style="margin-top: 30px; width:50%">
+            <input placeholder="Last Name" name="lastname" type="text" required="">
         </div>
-    {% else %}
-    <div style="margin-top:60px">
-        <h1>Student Conduct Tracker</h1>
-        <b>This is an application that allows members of staff to:</b>
-        <p style="margin-top:30px">1. Enter a new student into the system</p>
-        <p>2. Search for a specific student</p>
-        <p>3. Review students</p>
-        <p>4. View Student Reviews</p>
-    </div>
-    <blockquote style="margin-top: 40px;">Login on the top right to get started</blockquote>
-    {% endif %}
+        <div class="input-field" style="margin-top: 30px;  width:50%">
+            <input placeholder="Major" name="major" type="text" required="">
+        </div>
+        <button class="btn-large" type="submit" style="margin-top: 20px; margin-left:15%;"> Submit </button>
+    </form>
 
 {% endblock %}

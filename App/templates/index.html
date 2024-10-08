@@ -13,28 +13,28 @@
             <form action="/studentForm" method="GET">
                 <button style="width:250px" class="btn-large"> Add Student</button>
             </form>
-            <form style="margin-left: 30px" action="/">
+            <form style="margin-left: 30px" action="/searchStudent" method="GET">
                 <button style="width:250px" class="btn-large"> Search Student</button>
             </form>
         </div>
         <div style="display: flex; margin-top:30px">
-            <form action="/">
+            <form action="/review" method="GET">
                 <button style="width:250px" class="btn-large"> Review Student </button>
             </form>
-            <form style="margin-left: 30px" action="/">
+            <form style="margin-left: 30px" action="/viewReviews" method="GET">
                 <button style="width:250px" class="btn-large"> View Reviews </button>
             </form>
         </div>
     {% else %}
-    <div style="margin-top:60px">
-        <h1>Student Conduct Tracker</h1>
-        <b>This is an application that allows members of staff to:</b>
-        <p style="margin-top:30px">1. Enter a new student into the system</p>
-        <p>2. Search for a specific student</p>
-        <p>3. Review students</p>
-        <p>4. View Student Reviews</p>
-    </div>
-    <blockquote style="margin-top: 40px;">Login on the top right to get started</blockquote>
+        <h1 style="margin-top:60px">Student Conduct Tracker</h1>
+        <div style="margin-top:60px">
+            <b>This is an application that allows members of staff to:</b>
+            <p style="margin-top:30px">1. Enter a new student into the system</p>
+            <p>2. Search for a specific student</p>
+            <p>3. Review students</p>
+            <p>4. View Student Reviews</p>
+        </div>
+        <blockquote style="margin-top: 40px;">Login on the top right to get started</blockquote>
     {% endif %}
 
 {% endblock %}
