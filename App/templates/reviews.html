@@ -19,8 +19,9 @@
          <div class="card" style="margin-top: 10px; background-color: #f1f1f1; height:480px; overflow-y: scroll; overflow-wrap: break-word;" >
          <h5 style="text-align: center;">Student Reviews</h5>
          {% if reviews %}
+         <p style="margin-top: 30px;">Student: {{student.firstname}} {{student.lastname}}, {{student.id}} </p>
             {% for review in reviews %}
-               <div style="margin-top:20%; margin-left: 20px;">
+               <div style="margin-top:10%; margin-left: 20px;">
                   <p>{{review.text}}</p>
                   <p>by {{review.user.firstname}} {{review.user.lastname}}</p>
                </div>

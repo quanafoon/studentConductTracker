@@ -47,7 +47,8 @@ def student_reviews():
     studentID = request.args.get('studentID')
     reviews = get_reviews(studentID)
     if reviews:
-        return render_template('reviews.html', reviews=reviews)
+        student= get_student(studentID)
+        return render_template('reviews.html', reviews=reviews, student=student)
     else:
         flash('No reviews found')
         return render_template('reviews.html')
