@@ -24,11 +24,15 @@ def review_student():
 def addReview():
     userID = get_jwt_identity()
     data = request.form
-    review = add_review(data['studentID'], userID, data['text'])
-    if review:
-        flash('Review added')
+    student = get_student(data['studentID'])
+    if student:
+        review = add_review(data['studentID'], userID, data['text'])
+        if review:
+            flash('Review added')
+        else:
+            flash('Review could not be added')
     else:
-        flash('Review could not be added')
+        flash('Student does not exist')
     return render_template('reviewForm.html')
 
 
