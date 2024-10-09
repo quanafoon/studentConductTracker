@@ -1,24 +1,25 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory, flash, redirect, url_for
-from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from.index import index_views
 
 from App.controllers import (
     create_student,
     get_student,
+    add_review,
     jwt_required
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
 
-@jwt_required
 @student_views.route('/studentForm', methods=['GET'])
+@jwt_required()
 def student_form():
     return render_template('studentForm.html')
 
 
-@jwt_required
 @student_views.route('/addStudent', methods=['POST'])
+@jwt_required()
 def add_student():
     data = request.form
     student = create_student(data['firstname'], data['lastname'], data['major'])
@@ -26,15 +27,15 @@ def add_student():
         flash('Student created')
     else:
         flash('Could not create student')
-    return render_template('index.html')
+    return render_template('studentForm.html')
 
-@jwt_required
 @student_views.route('/searchStudent', methods=['GET'])
+@jwt_required()
 def student_search():
     return render_template('search.html')
 
-@jwt_required
 @student_views.route('/searchResult', methods=['GET'])
+@jwt_required()
 def search_result():
     studentID = request.args.get('studentID')
     student = get_student(studentID)
@@ -45,13 +46,27 @@ def search_result():
         flash('Student was not found')
         return render_template('search.html')
 
-@jwt_required
 @student_views.route('/review', methods=['GET'])
+@jwt_required()
 def review_student():
     return render_template('reviewForm.html')
 
-@jwt_required
+
+@student_views.route('/addReview', methods=['POST'])
+@jwt_required()
+def addReview():
+    userID = get_jwt_identity()
+    data = request.form
+    review = add_review(data['studentID'], userID, data['text'])
+    if review:
+        flash('Review added')
+    else:
+        flash('Review could not be added')
+    return render_template('reviewForm.html')
+
+
 @student_views.route('/viewReviews', methods=['GET'])
+@jwt_required()
 def view_reviews():
     return render_template('reviews.html')
 
