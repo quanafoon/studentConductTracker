@@ -23,7 +23,7 @@ App Group - student
 
     2) review - Adds a review to a student by a member of staff
 
-       use - flask student review studentID staffID, text
+       use - flask student review studentID userID text
 
        example - flask student add 1 1 good     creates review(1, 1, good)               
                                                 which is the review "good" for christin beck(1) by John Gonzales(1) 
