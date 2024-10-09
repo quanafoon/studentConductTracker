@@ -1,9 +1,10 @@
 
-Note - 3 members of staff have been created for the purposes of grading the assignment:
-
-    id - 1, username - john, password - johnpass, firstname - John, lastname - Gonzales, department - DCIT
-    id - 2, username - james, password - jamespass, firstname - James, lastname - Laurence, department - DCIT
-    id - 3, username - jane, password - janepass,firstname - Jane, lastname - Hnederson, department - DCIT
+Note - 4 users(members of staff) have already been created:
+   
+    id - 1, username - bob, password - bobpass, firstname - Bob, lastname - Davids, department - DCIT
+    id - 2, username - john, password - johnpass, firstname - John, lastname - Gonzales, department - DCIT
+    id - 3, username - james, password - jamespass, firstname - James, lastname - Laurence, department - DCIT
+    id - 4, username - jane, password - janepass,firstname - Jane, lastname - Hnederson, department - DCIT
 
 
 Commands:
