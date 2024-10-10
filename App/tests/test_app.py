@@ -95,7 +95,7 @@ class UsersIntegrationTests(unittest.TestCase):
         review = add_review(1, 1, "getting better")
         user = get_user(review.userID)
         user_json = user.get_json()
-        self.assertDictEqual(user_json, {"id":2, "username":"amanda",'firstname': 'Amanda', 'lastname': "Milton", "department":"DCIT"})
+        self.assertDictEqual(user_json, {"id":1, "username":"amanda",'firstname': 'Amanda', 'lastname': "Milton", "department":"DCIT"})
 
     
     def test_view_reviews(self):
