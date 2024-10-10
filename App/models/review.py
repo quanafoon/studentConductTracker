@@ -12,3 +12,12 @@ class Review(db.Model):
         self.text = text
         self.studentID = studentID
         self.userID = userID
+
+
+    def get_json(self):
+        return{
+            'id': self.id,
+            'text': self.text,
+            'studentID': self.studentID,
+            'userID': self.userID,
+        }
