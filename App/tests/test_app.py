@@ -3,14 +3,17 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from App.main import create_app
 from App.database import db, create_db
-from App.models import User
+from App.models import User, Student, Review
 from App.controllers import (
     create_user,
     get_all_users_json,
     login,
     get_user,
     get_user_by_username,
-    update_user
+    update_user,
+    get_student,
+    create_student,
+    add_review
 )
 
 
@@ -22,25 +25,37 @@ LOGGER = logging.getLogger(__name__)
 class UserUnitTests(unittest.TestCase):
 
     def test_new_user(self):
-        user = User("bob", "bobpass")
-        assert user.username == "bob"
+        user = User("amanda", "amandapass", "Amanda", "Milton", "DCIT")
+        assert user.username == "amanda"
 
     # pure function no side effects or integrations called
-    def test_get_json(self):
-        user = User("bob", "bobpass")
+    def test_get_json_user(self):
+        user = User("amanda", "amandapass")
         user_json = user.get_json()
-        self.assertDictEqual(user_json, {"id":None, "username":"bob"})
+        self.assertDictEqual(user_json, {"id":None, "username":"amanda"})
     
     def test_hashed_password(self):
-        password = "mypass"
+        password = "amandapass"
         hashed = generate_password_hash(password, method='sha256')
-        user = User("bob", password)
+        user = User("amanda", password, "Amanda", "Milton", "DCIT")
         assert user.password != password
 
     def test_check_password(self):
-        password = "mypass"
-        user = User("bob", password)
+        password = "amandapass"
+        user = User("amanda", password, "Amanda", "Milton", "DCIT")
         assert user.check_password(password)
+
+    def test_new_student(self):
+        student = Student("John", "Doe", "Computer Science")
+        assert student.firstname == "John"
+
+    def test_get_json_student(self):
+        student = Student()
+        student_json = student.get_json("John", "Doe", "Computer Science")
+        self.assertDictEqual(student_json, {"id":None, "firstname":"John"})
+
+
+
 
 '''
     Integration Tests
@@ -56,24 +71,35 @@ def empty_db():
     db.drop_all()
 
 
-def test_authenticate():
-    user = create_user("bob", "bobpass")
-    assert login("bob", "bobpass") != None
 
 class UsersIntegrationTests(unittest.TestCase):
 
-    def test_create_user(self):
-        user = create_user("rick", "bobpass")
-        assert user.username == "rick"
+    def test_authenticate(self):
+        user = create_user("amanda", "amandapass", "Amanda", "Milton", "DCIT")
+        assert login("amanda", "amandapass") != None
 
-    def test_get_all_users_json(self):
-        users_json = get_all_users_json()
-        self.assertListEqual([{"id":1, "username":"bob"}, {"id":2, "username":"rick"}], users_json)
+    def test_create_student(self):
+        student = create_student("John", "Doe", "Computer Science")
+        student_json = student.to_json()
+        self.assertDictEqual(student_json, {"id":1, "firstname":"John", "lastname":"Doe", "major":"Computer Science"}) 
 
-    # Tests data changes in the database
-    def test_update_user(self):
-        update_user(1, "ronnie")
-        user = get_user(1)
-        assert user.username == "ronnie"
-        
+    def test_view_reviews(self):
+        review = add_review(1, 1, "doing well")
+        review_json = review.to_json()
+        self.assertDictEqual(review_json, {"id":1, "text":"doing well"}) 
+
+    def test_user_review(self):
+        review = add_review(1, 1, "getting better")
+        user = get_user(review.userID)
+        user_json = user.to_json()
+        self.assertDictEqual(user_json, {"id":1, "username":"amanda"})
+
+    def test_student_review(self):
+        review = add_review(1, 1, "room for improvement")
+        student = get_student(review.studentID)
+        student_json = student.to_json()
+        self.assertDictEqual(student_json, {"id":1, "firstname":"John"})
+    
+    
+
 
