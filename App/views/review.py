@@ -35,6 +35,20 @@ def addReview():
         flash('Student does not exist')
     return render_template('reviewForm.html')
 
+@review_views.route('/api/addReview', methods=['POST'])
+@jwt_required()
+def addReview_api():
+    userID = get_jwt_identity()
+    data = request.form
+    student = get_student(data['studentID'])
+    if student:
+        review = add_review(data['studentID'], userID, data['text'])
+        if review:
+            return jsonify(message="Review added"), 201
+        else:
+            return jsonify(error="Review could not be added"), 400
+    else:
+        return jsonify(error="Student does not exist"), 400
 
 @review_views.route('/viewReviews', methods=['GET'])
 @jwt_required()
@@ -52,5 +66,17 @@ def student_reviews():
     else:
         flash('No reviews found')
         return render_template('reviews.html')
+
+@review_views.route('/api/studentReviews', methods=['GET'])
+@jwt_required()
+def student_reviews_api():
+    studentID = request.args.get('studentID')
+    reviews = get_reviews(studentID)
+    if reviews:
+        student= get_student(studentID)
+        data = [review.get_json() for review in reviews] 
+        return jsonify(data), 200
+    else:
+        return jsonify(message="There are no reviews for this student"), 404
 
 
