@@ -80,24 +80,24 @@ class UsersIntegrationTests(unittest.TestCase):
 
     def test_create_student(self):
         student = create_student("John", "Doe", "Computer Science")
-        student_json = student.to_json()
+        student_json = student.get_json()
         self.assertDictEqual(student_json, {"id":1, "firstname":"John", "lastname":"Doe", "major":"Computer Science"}) 
 
     def test_view_reviews(self):
         review = add_review(1, 1, "doing well")
-        review_json = review.to_json()
+        review_json = review.get_json()
         self.assertDictEqual(review_json, {"id":1, "text":"doing well"}) 
 
     def test_user_review(self):
         review = add_review(1, 1, "getting better")
         user = get_user(review.userID)
-        user_json = user.to_json()
+        user_json = user.get_json()
         self.assertDictEqual(user_json, {"id":1, "username":"amanda"})
 
     def test_student_review(self):
         review = add_review(1, 1, "room for improvement")
         student = get_student(review.studentID)
-        student_json = student.to_json()
+        student_json = student.get_json()
         self.assertDictEqual(student_json, {"id":1, "firstname":"John"})
     
     
