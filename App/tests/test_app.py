@@ -32,7 +32,7 @@ class UserUnitTests(unittest.TestCase):
     def test_get_json_user(self):
         user = User("amanda", "amandapass", "Amanda", "Milton", "DCIT")
         user_json = user.get_json()
-        self.assertDictEqual(user_json, {"id":None, "username":"amanda"})
+        self.assertDictEqual(user_json, {'id':None, 'username':"amanda", 'firstname':"Amanda", 'lastname':"Milton", 'department':"DCIT"})
     
     def test_hashed_password(self):
         password = "amandapass"
@@ -51,8 +51,8 @@ class UserUnitTests(unittest.TestCase):
 
     def test_get_json_student(self):
         student = Student("John", "Doe", "Computer Science")
-        student_json = student.get_json("John", "Doe", "Computer Science")
-        self.assertDictEqual(student_json, {"id":None, "firstname":"John"})
+        student_json = student.get_json()
+        self.assertDictEqual(student_json, {"id":None, "firstname":"John", "lastname": "Doe", "major":"Computer Science"})
 
 
 
@@ -83,23 +83,24 @@ class UsersIntegrationTests(unittest.TestCase):
         student_json = student.get_json()
         self.assertDictEqual(student_json, {"id":1, "firstname":"John", "lastname":"Doe", "major":"Computer Science"}) 
 
-    def test_view_reviews(self):
-        review = add_review(1, 1, "doing well")
-        review_json = review.get_json()
-        self.assertDictEqual(review_json, {"id": 1, "text": "doing well", "studentID": 1, "userID": 1}) 
 
+  
+    def test_student_review(self):
+        review = add_review(1, 1, "room for improvement")
+        student = get_student(review.studentID)
+        student_json = student.get_json()
+        self.assertDictEqual(student_json, {"id":1, "firstname":"John", "lastname": "Doe", "major": "Computer Science"})
+      
     def test_user_review(self):
         review = add_review(1, 1, "getting better")
         user = get_user(review.userID)
         user_json = user.get_json()
         self.assertDictEqual(user_json, {"id":2, "username":"amanda",'firstname': 'Amanda', 'lastname': "Milton", "department":"DCIT"})
 
-    def test_student_review(self):
-        review = add_review(1, 1, "room for improvement")
-        student = get_student(review.studentID)
-        student_json = student.get_json()
-        self.assertDictEqual(student_json, {"id":3, "firstname":"John", "lastname": "Doe", "major": "Computer Science"})
     
-    
+    def test_view_reviews(self):
+        review = add_review(1, 1, "doing well")
+        review_json = review.get_json()
+        self.assertDictEqual(review_json, {"id": 3, "text": "doing well", "studentID": 1, "userID": 1}) 
 
 
