@@ -1,9 +1,10 @@
 
-Note - 3 members of staff have been created for the purposes of grading the assignment:
-
-    id - 1, firstname - John, lastname - Gonzales, department - DCIT
-    id - 2, firstname - James, lastname - Laurence, department - DCIT
-    id - 3, firstname - Jane, lastname - Hnederson, department - DCIT
+Note - 4 users(members of staff) have already been created:
+   
+    id - 1, username - bob, password - bobpass, firstname - Bob, lastname - Davids, department - DCIT
+    id - 2, username - john, password - johnpass, firstname - John, lastname - Gonzales, department - DCIT
+    id - 3, username - james, password - jamespass, firstname - James, lastname - Laurence, department - DCIT
+    id - 4, username - jane, password - janepass,firstname - Jane, lastname - Hnederson, department - DCIT
 
 
 Commands:
@@ -23,7 +24,7 @@ App Group - student
 
     2) review - Adds a review to a student by a member of staff
 
-       use - flask student review studentID staffID, text
+       use - flask student review studentID userID text
 
        example - flask student add 1 1 good     creates review(1, 1, good)               
                                                 which is the review "good" for christin beck(1) by John Gonzales(1) 
